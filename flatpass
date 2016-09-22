@@ -1,0 +1,8 @@
+#!/bin/bash
+pwdir=~/flatpass/passwords
+filename=`find $pwdir -iname $1\*`
+tmpfile=$pwdir/tmp
+mkfifo $tmpfile &>/dev/null
+pw=`cat $tmpfile & xterm -e "echo $filename & gpg -qo- $filename > $tmpfile"`
+sleep 0.1 && xdotool type "$pw"
+
